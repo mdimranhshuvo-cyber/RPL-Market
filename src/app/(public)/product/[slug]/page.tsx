@@ -3,6 +3,7 @@ import { ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Metadata } from 'next';
+import { headers } from 'next/headers';
 import { generateProductSchema, generateBreadcrumbSchema } from '@/lib/seo';
 import { ProductDetailsSelector } from '@/components/templates/ServerRegistry';
 import { ProductCard } from '@/components/storefront/ProductCard';
@@ -25,6 +26,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     getCachedSettings()
   ]);
   if (!product) return { title: 'Product Not Found' };
+
+  const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
+  const headersList = await headers();
+  const hostname = headersList.get('host') || 'localhost';
+  const baseUrl = `${protocol}://${hostname}`;
 
   // Strip HTML tags and JSON structure for a clean meta description
   const cleanDescription = (product.description ?? '')
@@ -69,7 +75,6 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
-import { headers } from 'next/headers';
 import Script from 'next/script';
 
 export default async function ProductDetailsPage({ params }: { params: Promise<{ slug: string }> }) {

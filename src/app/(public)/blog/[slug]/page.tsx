@@ -35,6 +35,11 @@ export async function generateMetadata({ params }: BlogDetailProps): Promise<Met
 
   if (!blog) return { title: 'Blog Not Found' };
 
+  const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
+  const headersList = await headers();
+  const hostname = headersList.get('host') || 'localhost';
+  const baseUrl = `${protocol}://${hostname}`;
+
   const title = blog.metaTitle || blog.title;
   const description = blog.metaDescription || blog.title;
   const image = blog.thumbnail ? [blog.thumbnail] : [];
