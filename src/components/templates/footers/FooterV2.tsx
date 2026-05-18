@@ -2,14 +2,16 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { Facebook, Twitter, Instagram, Youtube } from '@/components/ui/social-icons';
-import { Mail, MapPin, Phone, ArrowUpRight } from 'lucide-react';
+import { Mail, MapPin, Phone, ArrowUpRight, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import DeveloperLogo from '@/components/ui/developerlogo';
 import { useSettings } from '@/components/SettingsProvider';
 import * as SocialIcons from '@/components/ui/social-icons';
 import { Circle } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 const socialIconMap: Record<string, any> = {
   facebook: SocialIcons.Facebook || Circle,
@@ -26,6 +28,68 @@ export default function FooterV2() {
   const settings = useSettings();
   const socialLinks = settings?.socialLinks || {};
   const hasSocialLinks = Object.values(socialLinks).some(v => v);
+
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [isStandalone, setIsStandalone] = useState(false);
+  const [isIOS, setIsIOS] = useState(false);
+
+  useEffect(() => {
+    // Check if running in standalone mode (already installed)
+    const checkStandalone = () => {
+      const isStandaloneMode = 
+        window.matchMedia('(display-mode: standalone)').matches ||
+        (window.navigator as any).standalone ||
+        document.referrer.includes('android-app://');
+      setIsStandalone(isStandaloneMode);
+    };
+
+    checkStandalone();
+
+    // Detect iOS device
+    const isIOSDevice = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
+    setIsIOS(isIOSDevice);
+
+    const handleBeforeInstallPrompt = (e: Event) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
+    const handleAppInstalled = () => {
+      setDeferredPrompt(null);
+      setIsStandalone(true);
+      toast.success('App installed successfully!');
+    };
+
+    window.addEventListener('appinstalled', handleAppInstalled);
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+      window.removeEventListener('appinstalled', handleAppInstalled);
+    };
+  }, []);
+
+  const handleInstallClick = async () => {
+    if (isIOS) {
+      toast.info('To install this app on your iPhone/iPad: Tap the "Share" icon in Safari and select "Add to Home Screen".', {
+        duration: 8000,
+      });
+      return;
+    }
+
+    if (!deferredPrompt) {
+      toast.error('Installation prompt is not ready. Please try again in a few seconds or check if the app is already installed.');
+      return;
+    }
+
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === 'accepted') {
+      toast.success('Thank you for installing our app!');
+    }
+    setDeferredPrompt(null);
+  };
 
   const footerNav = settings?.footerNavigation && settings.footerNavigation.length > 0 
     ? settings.footerNavigation 
@@ -44,12 +108,24 @@ export default function FooterV2() {
           {/* Brand Essence */}
           <div className="lg:col-span-4 space-y-6 flex flex-col items-center lg:items-start">
             <Link href="/" className="flex items-center gap-2 text-4xl font-black tracking-tighter hover:text-primary transition-all uppercase">
-              <img src="/logo.webp" alt="RPL Logo" className="h-10 w-10 object-contain" />
+              <Image src="/logo.webp" alt="RPL Logo" width={40} height={40} className="h-10 w-10 object-contain" />
               RPL<span className="text-primary">.</span>
             </Link>
             <p className="text-muted-foreground text-sm max-w-sm leading-relaxed font-medium">
               Pushing the boundaries of design. Born in the heart of Dhaka, engineering for the world.
             </p>
+
+            {/* PWA Download App Button */}
+            {!isStandalone && (deferredPrompt || isIOS) && (
+              <Button
+                onClick={handleInstallClick}
+                variant="outline"
+                className="mt-2 rounded-full border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground font-black text-[10px] tracking-widest gap-2 h-9 px-4 uppercase transition-all duration-300"
+              >
+                <Download className="h-3.5 w-3.5 animate-bounce" />
+                Download App
+              </Button>
+            )}
           </div>
 
           {/* Dynamic Navigation */}

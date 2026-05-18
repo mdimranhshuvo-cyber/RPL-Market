@@ -31,7 +31,7 @@ export function Logo({ className, imageClassName, textClassName, showText = true
           fill
           sizes={sizes || "(max-width: 768px) 40px, 48px"}
           className="object-contain"
-          quality={100}
+          quality={80}
           priority
         />
       </div>
