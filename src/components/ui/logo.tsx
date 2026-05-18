@@ -20,7 +20,7 @@ export function Logo({ className, imageClassName, textClassName, showText = true
   const { brandName, logoUrl } = useSettings();
   
   const finalBrandName = "RPL"; // Shortened for cleaner UI
-  const finalLogoUrl = src || logoUrl || "/logo.png";
+  const finalLogoUrl = src || logoUrl || "/logo.webp";
   
   return (
     <Link href="/" className={cn("flex items-center group", className)} onClick={onClick}>
