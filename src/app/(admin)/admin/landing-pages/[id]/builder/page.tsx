@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, use } from 'react';
 import { useRouter } from 'next/navigation';
 import { 
   DndContext, 
@@ -30,7 +30,7 @@ import {
   Settings, 
   GripVertical, 
   ChevronLeft,
-  DevicePhoneMobile,
+  Smartphone,
   Monitor as MonitorIcon,
   Laptop
 } from 'lucide-react';
@@ -43,7 +43,8 @@ import { v4 as uuidv4 } from 'uuid';
 import SortableSectionItem from './_components/SortableSectionItem';
 import SectionSettingsEditor from './_components/SectionSettingsEditor';
 
-export default function LandingPageBuilder({ params }: { params: { id: string } }) {
+export default function LandingPageBuilder({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params);
   const router = useRouter();
   const [pageData, setPageData] = useState<any>(null);
   const [sections, setSections] = useState<any[]>([]);
@@ -62,11 +63,11 @@ export default function LandingPageBuilder({ params }: { params: { id: string } 
 
   useEffect(() => {
     fetchPageData();
-  }, []);
+  }, [id]);
 
   const fetchPageData = async () => {
     try {
-      const res = await fetch(`/api/admin/landing-pages/${params.id}`);
+      const res = await fetch(`/api/admin/landing-pages/${id}`);
       if (!res.ok) throw new Error('Failed to load page');
       const data = await res.json();
       setPageData(data);
@@ -125,7 +126,7 @@ export default function LandingPageBuilder({ params }: { params: { id: string } 
   const savePage = async () => {
     setSaving(true);
     try {
-      const res = await fetch(`/api/admin/landing-pages/${params.id}`, {
+      const res = await fetch(`/api/admin/landing-pages/${id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ sections })
@@ -175,7 +176,7 @@ export default function LandingPageBuilder({ params }: { params: { id: string } 
               className="h-8 w-8" 
               onClick={() => setPreviewMode('mobile')}
             >
-              <DevicePhoneMobile className="h-4 w-4" />
+              <Smartphone className="h-4 w-4" />
             </Button>
           </div>
 
