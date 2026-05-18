@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
     try {
         const headersList = await headers();
         const hostname = headersList.get('host') || 'localhost';
-        const settings = await getCachedSettings(hostname);
+        const settings = await getCachedSettings();
 
         const pixelId = settings?.metaPixelId || process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID;
         const accessToken = settings?.facebookAccessToken || process.env.FACEBOOK_ACCESS_TOKEN;

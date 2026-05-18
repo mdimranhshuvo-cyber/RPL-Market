@@ -18,7 +18,7 @@ async function getGlobalSettings() {
     const headersList = await headers();
     const hostname = headersList.get('host') || 'localhost';
     const { getCachedSettings } = await import('@/lib/data-fetching');
-    return await getCachedSettings(hostname);
+    return await getCachedSettings();
   } catch (error) {
     console.error('Error fetching settings for footer:', error);
     return null;
