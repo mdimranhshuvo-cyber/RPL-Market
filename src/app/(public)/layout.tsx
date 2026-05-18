@@ -10,7 +10,7 @@ import { auth } from '@/auth';
 
 export default async function PublicLayout({ children }: { children: React.ReactNode }) {
   const session = await auth();
-  const isSuperAdmin = session?.user?.role === 'super_admin';
+  const isSuperAdmin = (session?.user as any)?.role === 'super_admin';
   
   let settings = null;
   try {
