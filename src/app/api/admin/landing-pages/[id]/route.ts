@@ -15,19 +15,20 @@ async function authorizeAdmin() {
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     if (!(await authorizeAdmin())) {
       return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     }
 
-    if (!mongoose.Types.ObjectId.isValid(params.id)) {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
       return NextResponse.json({ message: 'Invalid ID format' }, { status: 400 });
     }
 
     await connectToDatabase();
-    const page = await LandingPage.findById(params.id);
+    const page = await LandingPage.findById(id);
     
     if (!page) {
       return NextResponse.json({ message: 'Page not found' }, { status: 404 });
@@ -41,14 +42,15 @@ export async function GET(
 
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     if (!(await authorizeAdmin())) {
       return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     }
 
-    if (!mongoose.Types.ObjectId.isValid(params.id)) {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
       return NextResponse.json({ message: 'Invalid ID format' }, { status: 400 });
     }
 
@@ -70,7 +72,7 @@ export async function PATCH(
 
     await connectToDatabase();
     const updatedPage = await LandingPage.findByIdAndUpdate(
-      params.id,
+      id,
       { $set: sanitizedUpdate },
       { new: true, runValidators: true }
     );
@@ -87,19 +89,20 @@ export async function PATCH(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     if (!(await authorizeAdmin())) {
       return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     }
 
-    if (!mongoose.Types.ObjectId.isValid(params.id)) {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
       return NextResponse.json({ message: 'Invalid ID format' }, { status: 400 });
     }
 
     await connectToDatabase();
-    const deletedPage = await LandingPage.findByIdAndDelete(params.id);
+    const deletedPage = await LandingPage.findByIdAndDelete(id);
 
     if (!deletedPage) {
       return NextResponse.json({ message: 'Page not found' }, { status: 404 });
