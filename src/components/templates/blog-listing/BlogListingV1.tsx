@@ -51,7 +51,7 @@ export default function BlogListingV1({
             className="group grid grid-cols-1 lg:grid-cols-2 overflow-hidden border bg-card hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 mb-16 border-border/50"
           >
             {/* Left — Image */}
-            <div className="relative aspect-video overflow-hidden bg-muted w-full">
+            <div className="relative aspect-video lg:aspect-auto lg:h-full overflow-hidden bg-muted w-full">
               {featuredBlog.thumbnail ? (
                 <Image
                   src={featuredBlog.thumbnail}
@@ -80,12 +80,12 @@ export default function BlogListingV1({
                 })}
               </div>
 
-              <h3 className="text-2xl md:text-3xl lg:text-4xl font-black tracking-tight leading-tight group-hover:text-primary transition-colors duration-300 line-clamp-2">
+              <h3 className="text-lg md:text-2xl font-black tracking-tight leading-tight group-hover:text-primary transition-colors duration-300 line-clamp-2">
                 {featuredBlog.title}
               </h3>
 
               {featuredBlog.metaDescription && (
-                <p className="text-muted-foreground text-lg leading-relaxed line-clamp-3">
+                <p className="text-muted-foreground text-base leading-relaxed line-clamp-3">
                   {featuredBlog.metaDescription}
                 </p>
               )}

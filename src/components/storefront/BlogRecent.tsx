@@ -51,7 +51,7 @@ export function BlogRecent({ blogs }: BlogRecentProps) {
           className="group grid grid-cols-1 lg:grid-cols-2 overflow-hidden border bg-card hover:shadow-2xl transition-all duration-500"
         >
           {/* Left — Image */}
-          <div className="relative aspect-video overflow-hidden bg-muted w-full">
+          <div className="relative aspect-video lg:aspect-auto lg:h-full overflow-hidden bg-muted w-full">
             {blog.thumbnail ? (
               <img
                 src={blog.thumbnail}
