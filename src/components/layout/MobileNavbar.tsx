@@ -60,7 +60,7 @@ export function MobileNavbar({ navItems, categories }: MobileNavbarProps) {
             categories={categories}
             session={session}
           />
-          <Logo textClassName="text-lg" />
+          <Logo textClassName="text-xl" />
         </div>
 
         {/* Right: Icons */}

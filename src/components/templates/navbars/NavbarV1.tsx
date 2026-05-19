@@ -285,7 +285,7 @@ export default function Navbar() {
 
             {/* Logo (Centered in desktop, Left-ish in mobile) */}
             <div className="flex items-center justify-center flex-1 md:flex-initial">
-              <Logo textClassName="text-lg md:text-3xl" />
+              <Logo textClassName="text-xl md:text-3xl" />
             </div>
 
             {/* Icons/Action Row (Right) */}

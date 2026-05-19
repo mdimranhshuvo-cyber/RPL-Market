@@ -23,13 +23,13 @@ export function Logo({ className, imageClassName, textClassName, showText = true
   const finalLogoUrl = src || logoUrl || "/logo.webp";
   
   return (
-    <Link href="/" className={cn("flex items-center group", className)} onClick={onClick}>
-      <div className={cn("relative flex items-center justify-center overflow-hidden transition-transform group-hover:scale-110 size-8 md:size-12", imageClassName)}>
+    <Link href="/" className={cn("flex items-center gap-1.5 group", className)} onClick={onClick}>
+      <div className={cn("relative flex items-center justify-center overflow-hidden transition-transform group-hover:scale-110 size-6 md:size-8 shrink-0", imageClassName)}>
         <Image
           src={finalLogoUrl}
           alt={`${finalBrandName} Logo`}
           fill
-          sizes={sizes || "(max-width: 768px) 40px, 48px"}
+          sizes={sizes || "(max-width: 768px) 24px, 32px"}
           className="object-contain"
           quality={80}
           priority
@@ -37,7 +37,7 @@ export function Logo({ className, imageClassName, textClassName, showText = true
       </div>
       {showText && (
         <span className={cn(
-          "text-xl md:text-2xl uppercase text-primary transition-all group-hover:text-primary/90 font-bold font-logo",
+          "text-xl md:text-2xl uppercase text-foreground transition-colors group-hover:text-primary font-black tracking-tighter font-logo",
           textClassName
         )}>
           {finalBrandName}
