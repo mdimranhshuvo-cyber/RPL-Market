@@ -39,9 +39,10 @@ interface ProductCardProps {
     numReviews?: number;
   };
   isFlashSale?: boolean;
+  priority?: boolean;
 }
 
-export default function ProductCardV6({ product, isFlashSale }: ProductCardProps) {
+export default function ProductCardV6({ product, isFlashSale, priority }: ProductCardProps) {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const { data: session, status } = useSession();
@@ -160,7 +161,8 @@ export default function ProductCardV6({ product, isFlashSale }: ProductCardProps
             alt={product.name}
             fill
             className="object-cover transition-transform duration-700 group-hover:scale-110"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+            priority={priority}
           />
         </Link>
 
@@ -193,6 +195,7 @@ export default function ProductCardV6({ product, isFlashSale }: ProductCardProps
                   variant="secondary"
                   className="h-12 w-12 rounded-full bg-white text-black hover:bg-primary hover:text-white shadow-xl transition-all hover:scale-110"
                   onClick={(e) => { e.preventDefault(); setShowQuickViewModal(true); }}
+                  aria-label="Quick view product"
                 >
                   <Search className="h-5 w-5" />
                 </Button>
@@ -209,6 +212,7 @@ export default function ProductCardV6({ product, isFlashSale }: ProductCardProps
                   variant="secondary"
                   className={`h-12 w-12 rounded-full bg-white shadow-xl transition-all hover:scale-110 ${isInWishlist ? 'text-primary' : 'text-black hover:bg-primary hover:text-white'}`}
                   onClick={handleWishlist}
+                  aria-label={isInWishlist ? "Remove from wishlist" : "Add to wishlist"}
                 >
                   <Heart className={`h-5 w-5 ${isInWishlist ? 'fill-current' : ''}`} />
                 </Button>

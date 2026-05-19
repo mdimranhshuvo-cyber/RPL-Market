@@ -253,7 +253,7 @@ export default function ShopClient({ initialProducts, initialCategories }: ShopC
               <Select value={sortBy} onValueChange={(val) => {
                 if (val) setSortBy(val);
               }}>
-                <SelectTrigger className="w-full sm:w-[180px]">
+                <SelectTrigger className="w-full sm:w-[180px]" aria-label="Sort products">
                   <SelectValue placeholder="Sort by" />
                 </SelectTrigger>
                 <SelectContent>
@@ -353,8 +353,8 @@ export default function ShopClient({ initialProducts, initialCategories }: ShopC
             </div>
           ) : (
             <div className={`grid gap-6 ${view === 'grid' ? 'grid-cols-2 lg:grid-cols-3 xl:grid-cols-4' : 'grid-cols-1'}`}>
-              {paginatedProducts.map((product) => (
-                <ProductCard key={product._id} product={product} />
+              {paginatedProducts.map((product, index) => (
+                <ProductCard key={product._id} product={product} priority={index < 4} />
               ))}
             </div>
           )}

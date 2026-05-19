@@ -44,14 +44,14 @@ const ProductCardV4 = dynamic(() => import('./product-cards/ProductCardV4'));
 const ProductCardV5 = dynamic(() => import('./product-cards/ProductCardV5'));
 const ProductCardV6 = dynamic(() => import('./product-cards/ProductCardV6'));
 
-export const ProductCardSelector = ({ style, product, isFlashSale }: { style: string, product: any, isFlashSale?: boolean }) => {
+export const ProductCardSelector = ({ style, product, isFlashSale, priority }: { style: string, product: any, isFlashSale?: boolean, priority?: boolean }) => {
   switch (style) {
     case 'v1': return <ProductCardV1 product={product} isFlashSale={isFlashSale} />;
     case 'v2': return <ProductCardV2 product={product} isFlashSale={isFlashSale} />;
     case 'v3': return <ProductCardV3 product={product} isFlashSale={isFlashSale} />;
     case 'v4': return <ProductCardV4 product={product} isFlashSale={isFlashSale} />;
     case 'v5': return <ProductCardV5 product={product} isFlashSale={isFlashSale} />;
-    case 'v6': return <ProductCardV6 product={product} isFlashSale={isFlashSale} />;
+    case 'v6': return <ProductCardV6 product={product} isFlashSale={isFlashSale} priority={priority} />;
     default: return <ProductCardV1 product={product} isFlashSale={isFlashSale} />;
   }
 };
