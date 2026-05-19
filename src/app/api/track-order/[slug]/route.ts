@@ -14,10 +14,13 @@ export async function GET(
   { params }: { params: Promise<{ slug: string }> }
 ) {
   try {
-    const { slug } = await params;
+    let { slug } = await params;
     if (!slug) {
         return NextResponse.json({ message: 'Order ID is required' }, { status: 400 });
     }
+
+    // Clean up slug: trim and strip leading '#'
+    slug = slug.trim().replace(/^#/, '');
 
     await connectToDatabase();
     
@@ -27,9 +30,22 @@ export async function GET(
     if (mongoose.isObjectIdOrHexString(slug)) {
         query._id = slug;
     } 
-    // 2. Check if it's a short ID (8 hex chars) - Now uses the indexed shortId field
+    // 2. Check if it's a short ID (8 hex chars) - Supports both random shortId and last 8 chars of ObjectId
     else if (/^[0-9a-fA-F]{8}$/.test(slug)) {
-        query.shortId = slug.toUpperCase();
+        query = {
+            deletedAt: null,
+            $or: [
+                { shortId: slug.toUpperCase() },
+                {
+                    $expr: {
+                        $eq: [
+                            { $substrCP: [{ $toString: "$_id" }, 16, 8] },
+                            slug.toLowerCase()
+                        ]
+                    }
+                }
+            ]
+        };
     } else {
         return NextResponse.json({ message: 'Invalid Order ID format' }, { status: 400 });
     }
