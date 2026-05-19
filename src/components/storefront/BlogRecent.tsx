@@ -81,7 +81,7 @@ export function BlogRecent({ blogs }: BlogRecentProps) {
               })()}
             </div>
 
-            <h3 className="text-2xl md:text-3xl font-black tracking-tight leading-tight group-hover:text-primary transition-colors duration-300 line-clamp-2">
+            <h3 className="text-lg md:text-2xl font-black tracking-tight leading-tight group-hover:text-primary transition-colors duration-300 line-clamp-2">
               {blog.title}
             </h3>
 
