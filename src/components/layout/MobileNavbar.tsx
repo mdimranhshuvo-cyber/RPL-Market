@@ -60,7 +60,7 @@ export function MobileNavbar({ navItems, categories }: MobileNavbarProps) {
             categories={categories}
             session={session}
           />
-          <Logo textClassName="text-xl" />
+          <Logo textClassName="text-base sm:text-lg whitespace-nowrap" />
         </div>
 
         {/* Right: Icons */}

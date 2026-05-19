@@ -51,7 +51,7 @@ export default function BlogListingV1({
             className="group grid grid-cols-1 lg:grid-cols-2 overflow-hidden border bg-card hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 mb-16 border-border/50"
           >
             {/* Left — Image */}
-            <div className="relative aspect-[4/3] lg:aspect-auto overflow-hidden bg-muted min-h-[300px] md:min-h-[450px]">
+            <div className="relative aspect-video overflow-hidden bg-muted w-full">
               {featuredBlog.thumbnail ? (
                 <Image
                   src={featuredBlog.thumbnail}
@@ -80,7 +80,7 @@ export default function BlogListingV1({
                 })}
               </div>
 
-              <h3 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight leading-tight group-hover:text-primary transition-colors duration-300">
+              <h3 className="text-2xl md:text-3xl lg:text-4xl font-black tracking-tight leading-tight group-hover:text-primary transition-colors duration-300 line-clamp-2">
                 {featuredBlog.title}
               </h3>
 
@@ -114,7 +114,7 @@ export default function BlogListingV1({
                 href={`/blog/${blog.slug}`}
                 className="group flex flex-col bg-card border overflow-hidden hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 hover:-translate-y-2 border-border/50"
               >
-                <div className="aspect-[16/10] overflow-hidden relative bg-muted">
+                <div className="aspect-video overflow-hidden relative bg-muted">
                   {blog.thumbnail ? (
                     <Image
                       src={blog.thumbnail}
@@ -134,8 +134,8 @@ export default function BlogListingV1({
                     <Calendar className="h-3.5 w-3.5" />
                     {new Date(blog.createdAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
                   </div>
-                  <div className="h-14 mb-4">
-                    <h3 className="text-xl font-black leading-tight group-hover:text-primary transition-colors line-clamp-2">
+                  <div className="h-12 mb-4">
+                    <h3 className="text-lg font-black leading-tight group-hover:text-primary transition-colors line-clamp-2">
                       {blog.title}
                     </h3>
                   </div>

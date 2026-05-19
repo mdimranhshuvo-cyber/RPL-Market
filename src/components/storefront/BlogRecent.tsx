@@ -51,7 +51,7 @@ export function BlogRecent({ blogs }: BlogRecentProps) {
           className="group grid grid-cols-1 lg:grid-cols-2 overflow-hidden border bg-card hover:shadow-2xl transition-all duration-500"
         >
           {/* Left — Image */}
-          <div className="relative aspect-[4/3] lg:aspect-auto overflow-hidden bg-muted min-h-[300px]">
+          <div className="relative aspect-video overflow-hidden bg-muted w-full">
             {blog.thumbnail ? (
               <img
                 src={blog.thumbnail}
@@ -81,7 +81,7 @@ export function BlogRecent({ blogs }: BlogRecentProps) {
               })()}
             </div>
 
-            <h3 className="text-3xl md:text-4xl font-black tracking-tight leading-tight group-hover:text-primary transition-colors duration-300">
+            <h3 className="text-2xl md:text-3xl font-black tracking-tight leading-tight group-hover:text-primary transition-colors duration-300 line-clamp-2">
               {blog.title}
             </h3>
 
