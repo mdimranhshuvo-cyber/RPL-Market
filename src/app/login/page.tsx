@@ -88,7 +88,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="relative min-h-screen">
+    <main className="relative min-h-screen">
       {/* Left Side: Image Banner */}
       <motion.div
         initial={{ opacity: 0, x: -50 }}
@@ -100,7 +100,6 @@ export default function LoginPage() {
           src="/assets/login_banner_v2.webp"
           alt="Login Banner"
           fill
-          priority
           className="absolute inset-0 h-full w-full object-cover brightness-[0.8] contrast-[1.1]"
           sizes="50vw"
         />
@@ -204,7 +203,7 @@ export default function LoginPage() {
                           <FormLabel>Password</FormLabel>
                           <Link
                             href="/forgot-password"
-                            className="text-sm font-medium text-primary hover:underline underline-offset-4"
+                            className="text-sm font-medium text-foreground/80 hover:text-primary hover:underline underline-offset-4 transition-colors"
                           >
                             Forgot password?
                           </Link>
@@ -224,10 +223,11 @@ export default function LoginPage() {
                                   <button
                                     type="button"
                                     onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-primary transition-colors focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1 rounded-sm outline-none"
+                                    className="absolute right-0 top-0 h-11 w-11 text-muted-foreground hover:text-primary transition-colors focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1 rounded-r-lg outline-none flex items-center justify-center"
                                     disabled={isLoading || isGoogleLoading}
+                                    aria-label={showPassword ? "Hide password" : "Show password"}
                                   >
-                                    {showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
+                                    {showPassword ? <EyeOff className="size-5" /> : <Eye className="size-5" />}
                                   </button>
                                 </TooltipTrigger>
                                 <TooltipContent side="top">
@@ -260,7 +260,7 @@ export default function LoginPage() {
 
             <div className="text-center text-sm text-muted-foreground">
               Don&apos;t have an account?{' '}
-              <Link href="/register" className="font-semibold text-primary hover:underline underline-offset-4">
+              <Link href="/register" className="font-bold text-foreground/90 hover:text-primary hover:underline underline-offset-4 transition-colors">
                 Create an account
               </Link>
             </div>
@@ -278,7 +278,7 @@ export default function LoginPage() {
           </Link>.
         </div>
       </div>
-    </div>
+    </main>
   );
 }
 
