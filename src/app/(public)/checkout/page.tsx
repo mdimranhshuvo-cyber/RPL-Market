@@ -465,9 +465,9 @@ export default function CheckoutPage() {
                       {item.image && <img src={item.image} alt={item.name || 'Product'} className="h-full w-full object-cover" />}
                     </div>
                     <div className="flex-1 min-w-0 space-y-1">
-                      <div className="flex justify-between items-start gap-2">
-                        <div className="flex flex-col pr-4">
-                          <p className="text-sm font-bold truncate">{item.name}</p>
+                      <div className="flex justify-between items-start gap-2 w-full min-w-0">
+                        <div className="flex flex-col pr-4 min-w-0 flex-1">
+                          <p className="text-sm font-bold truncate" title={item.name}>{item.name}</p>
                           {(item.color || item.size) && (
                             <p className="text-[10px] text-muted-foreground font-medium">
                               {[item.color, item.size].filter(Boolean).join(' / ')}
