@@ -246,8 +246,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
   return (
     <Sidebar {...props}>
-      <SidebarHeader className="border-b h-14 lg:h-[60px] px-6 flex items-center">
-        <Logo textClassName="text-lg md:text-2xl" />
+      <SidebarHeader className="border-b h-14 lg:h-[60px] px-4 flex items-center">
+        <Logo textClassName="text-sm md:text-base font-black tracking-wide whitespace-nowrap" />
       </SidebarHeader>
       <SidebarContent className="gap-0">
         <NavMain items={data.navMain} pathname={pathname} role={role} />
