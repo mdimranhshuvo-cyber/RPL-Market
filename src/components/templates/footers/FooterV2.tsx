@@ -111,7 +111,7 @@ export default function FooterV2() {
           <div className="lg:col-span-4 space-y-6 flex flex-col items-center lg:items-start">
             <Link href="/" className="flex items-center gap-2 text-4xl font-black tracking-tighter hover:text-primary transition-all uppercase">
               <Image src="/logo.webp" alt="RPL Logo" width={40} height={40} className="h-10 w-10 object-contain" />
-              RPL
+              {settings?.brandName || 'RPL Market'}
             </Link>
             <p className="text-muted-foreground text-sm max-w-sm leading-relaxed font-medium">
               Pushing the boundaries of design. Born in the heart of Dhaka, engineering for the world.
