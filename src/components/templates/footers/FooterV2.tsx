@@ -109,8 +109,8 @@ export default function FooterV2() {
           
           {/* Brand Essence */}
           <div className="lg:col-span-4 space-y-6 flex flex-col items-center lg:items-start">
-            <Link href="/" className="flex items-center gap-2 text-2xl sm:text-3xl lg:text-4xl font-black tracking-tighter hover:text-primary transition-all uppercase">
-              <Image src="/logo.webp" alt="RPL Logo" width={40} height={40} className="h-10 w-10 object-contain" />
+            <Link href="/" className="text-2xl md:text-3xl font-black tracking-tighter hover:scale-105 transition-all flex items-center gap-2 group text-foreground">
+              <Image src="/logo.webp" width={40} height={40} alt="RPL Logo" className="object-contain" />
               {settings?.brandName || 'RPL Market'}
             </Link>
             <p className="text-muted-foreground text-sm max-w-sm leading-relaxed font-medium">
