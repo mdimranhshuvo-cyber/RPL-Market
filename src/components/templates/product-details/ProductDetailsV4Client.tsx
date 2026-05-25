@@ -12,6 +12,7 @@ import { toggleWishlist } from '@/store/slices/wishlistSlice';
 import { toast } from 'sonner';
 import { useSession } from 'next-auth/react';
 import ReviewsSection from '@/components/storefront/ReviewsSection';
+import ShareDialog from '@/components/storefront/ShareDialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   DropdownMenu,
@@ -51,6 +52,7 @@ export default function ProductDetailsV4Client({ product }: ProductDetailsV4Clie
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isShareOpen, setIsShareOpen] = useState(false);
 
   const uniqueColors = useMemo(() =>
     Array.from(new Set((product.variants || []).map((v: any) => v.color))).filter(Boolean) as string[],
@@ -323,21 +325,7 @@ export default function ProductDetailsV4Client({ product }: ProductDetailsV4Clie
               <Heart className={`h-4 w-4 ${isInWishlist ? 'fill-primary text-primary' : ''}`} /> Save for Later
             </button>
             <button
-              onClick={async () => {
-                const url = window.location.href;
-                try {
-                  if (navigator.share) {
-                    await navigator.share({ title: product.name, url });
-                  } else {
-                    await navigator.clipboard.writeText(url);
-                    toast.success('Link Saved to clipboard');
-                  }
-                } catch (err: any) {
-                  if (err.name !== 'AbortError') {
-                    toast.error('Sharing failed');
-                  }
-                }
-              }}
+              onClick={() => setIsShareOpen(true)}
               className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors"
             >
               <Share2 className="h-4 w-4" /> Share Collection
@@ -376,6 +364,13 @@ export default function ProductDetailsV4Client({ product }: ProductDetailsV4Clie
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Share Modal */}
+      <ShareDialog
+        isOpen={isShareOpen}
+        onOpenChange={setIsShareOpen}
+        title={product.name}
+      />
     </div>
   );
 }
